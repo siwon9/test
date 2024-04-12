@@ -6,5 +6,6 @@ public class Ex13 {
         double num2 = 2.5;
 
         double num3 = num1 * num2; // 연산은 무조건 같은 자료형 끼리만 가능
+        System.out.println(num3);
     }
 }

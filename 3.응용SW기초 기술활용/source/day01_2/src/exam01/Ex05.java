@@ -11,5 +11,6 @@ public class Ex05 {
         final int num3;
         num3 = 30; // 최초 한번만 상수는 대입 가능
 
+        System.out.println(num2);
     }
 }

@@ -5,7 +5,7 @@ public class Ex01 {
         int num1;
         num1 = 10; // 최초르 값을 대입하는 것 -->초 기화
 
-        int num2=10;; // 선언거 동시에 초기화
+        int num2=10;; // 선언과 동시에 초기화
         num1 = 15;
 
         System.out.println(num1);
