@@ -1,0 +1,24 @@
+package exam02;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Ex07 {
+    public static void main(String[] args) {
+        String str = " java one\n java two\n java three";
+        // Pattern p1 = Pattern.compile("^\\w+\\s");
+        Pattern p1 = Pattern.compile("^\\w+\\s", Pattern.MULTILINE);
+        Matcher m1 = p1.matcher(str);
+        if (m1.find()) {
+            System.out.println(m1.group());
+        }
+
+        if(m1.find()) {
+            System.out.println(m1.group());
+        }
+        if(m1.find()) {
+            System.out.println(m1.group());
+        }
+       // System.out.println(str);
+    }
+}

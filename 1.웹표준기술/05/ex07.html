@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <style>    
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+
+        html {
+                font-size:13px; /* 1rem=13px */
+        }
+
+        .font1 {
+            font-size:2rem;/* 2rem = 26px */
+            font-family: "Noto Sans KR", sans-serif;
+            /* 환경이 달라도 도일하게 적용가능한 폰트를 사용하는게 좋음*/
+        }
+        .font2 {
+            font-size:30px; /* 1em = 30px; */
+        }
+        .font2 span {
+            font-size:2em; /* 60px */
+        }
+
+        </style>
+        <p class="font1">가나다</p>
+        <p class="font2">
+            <span>가나다</span>
+        </p>
+    </body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <style>
+           ul li {background:orange;}
+            ol li {background:blue;}
+            /*ul li span {color:red;}*/
+
+            ul > li > span {color:red;}
+        </style>
+        <ul>
+            <li class="menus">
+                <span>menu1</span>
+                <ol>
+                    <li>sub menu1</li>
+                    <li>
+                        <span>sub menu2</span>
+                    </li>
+                </ol>
+            </li>
+            <li>menu2</li>
+            <li>menu3</li>
+        </ul>
+        <ol>
+            <li>menu1</li>
+            <li>menu2</li>
+            <li>menu3</li>
+        </ol>
+    </body>
+</html>
+

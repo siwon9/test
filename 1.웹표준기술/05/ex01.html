@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <style>
+            li {
+                background: orange; 
+            }
+            .menus {
+                background:blue /*!important;*/ 
+            }                   /* !importnat 는 진짜 필요할 때만 쓰기 */
+            .menus5 {
+                background: green;
+            }
+            #menu4 {
+                background:red;
+            }
+        </style>
+        <ul>
+            <li>menu1</li>
+            <li>menu2</li>
+            <li class="menus">menu3</li>
+            <li class="menus" id="menu4" style=background:pink >menu4</li>
+            <li class="menus menus5">menu5</li>
+        </ul>
+    </body>
+</html>
