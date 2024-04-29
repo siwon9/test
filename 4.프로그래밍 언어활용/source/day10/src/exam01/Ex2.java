@@ -12,9 +12,9 @@ public class Ex2 {
             case SUBWAY :
                 System.out.println("지하철");
                 break;
-            case TAXI :
-                System.out.println("택시");
-                break;
+           // case TAXI :
+             //   System.out.println("택시");
+               // break;
             default :
                 System.out.println("걷기");
         }

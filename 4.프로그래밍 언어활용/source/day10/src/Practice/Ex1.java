@@ -1,6 +1,6 @@
-package exam01;
+package Practice;
 
-public class Ex05 {
+public class Ex1 {
     public static void main(String[] args) {
         String tran1 = "TAXI";
 

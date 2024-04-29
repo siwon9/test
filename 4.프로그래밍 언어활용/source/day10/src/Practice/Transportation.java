@@ -1,4 +1,4 @@
-package exam01;
+package Practice;
 
 public enum Transportation {
     BUS,
