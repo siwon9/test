@@ -9,7 +9,7 @@ public class Information {
         this.name = name;
         this.money = money;
     }
-
+/*
     public void takeStar(Coffee star){
         star.take(4000);
         this.money -= 4000;
@@ -20,7 +20,10 @@ public class Information {
         this.money -= 4500;
     }
 
-
+*/
 }
+
+
+
 
 
