@@ -14,6 +14,5 @@ public class Ex06 {
         System.out.println(cond4.test(150));
         //System.out.println(cond1.test(20));
 
-        // 111111
     }
 }
