@@ -8,17 +8,18 @@ import java.util.Arrays;
 public class Q1 {
     public static void main(String[] args) {
         int array[] = {1,3,11,8,9};
+        System.out.println(solution(array));
     }
 
-    public int solution(int[] array){
+    public static int solution(int[] array){
         Arrays.sort(array);
         int middle = array.length/2;
 
         if(array.length % 2 == 0){
             System.out.println("배열을 홀수단위로 입력하세요");
-        } else {
-            System.out.println(middle);
+            return 0;
         }
-            return array(middle);
+
+        return array[middle];
     }
 }
