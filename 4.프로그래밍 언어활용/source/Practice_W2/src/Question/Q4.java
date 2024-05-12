@@ -13,6 +13,8 @@ public class Q4 {
             price -= price * 0.1;
         } else if (price >= 500000) {
             price -= price * 0.2;
+        } else {
+            price = price;
         }
         return price;
     }
