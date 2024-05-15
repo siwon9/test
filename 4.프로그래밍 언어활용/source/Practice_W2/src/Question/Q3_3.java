@@ -5,12 +5,12 @@ import java.util.Arrays;
 public class Q3_3 {
     public static void main(String[] args) {
         int[] array = new int[5];
-
+        int index = 0;
 
         for (int i=1; i<10; i +=2 ) {
-            array.[] = i;
-
+            array[index] += i;
         }
-
+        
+        System.out.println(array[index]);
     }
 }
