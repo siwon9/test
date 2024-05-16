@@ -5,6 +5,19 @@ package Question;
 
 public class Q3 {
     public static void main(String[] args) {
+        int[] array = {1,1,2,2,2,2,4,4};
+        int n = 2;
+        int result = solution(array, n);
+        System.out.println(result);
+    }
 
+    public static int solution(int[] array, int n) {
+        int count = 0;
+        for(int i : array) {
+            if(i==n) {
+                count++;
+            }
+        }
+        return count;
     }
 }

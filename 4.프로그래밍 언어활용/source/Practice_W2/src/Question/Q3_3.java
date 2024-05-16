@@ -5,12 +5,16 @@ import java.util.Arrays;
 public class Q3_3 {
     public static void main(String[] args) {
         int[] array = new int[5];
-        int index = 0;
+        int index = 0; // 배열순서
+        int sum = 0; // 짝수 합
 
-        for (int i=1; i<10; i +=2 ) {
-            array[index] += i;
+        for (int i=1; i<=10; i++ ) {
+            if(i%2==0) {
+                array[index] += i;
+                sum += i;
+                index++;
+            }
         }
-        
-        System.out.println(array[index]);
+        System.out.println(sum);
     }
 }
