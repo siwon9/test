@@ -14,8 +14,10 @@ class Ex02_1 extends Thread {
 
     }
     private void throwException() {
-        throw new Exception;
-    }   catch(Exception e) {
-        e.printStackTrace();
+        try {
+            throw new Exception();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
