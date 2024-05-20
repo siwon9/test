@@ -11,11 +11,7 @@ public class Q3 {
     }
 
     public static double probability(int a) {
-        return (double) combination(a, 6) / factorial(6);
-    }
-
-    public static long combination(int n, int r) {
-        return factorial(n) / (factorial(r) * factorial(n - r));
+        return (double) factorial(a) / factorial(a-6);
     }
 
     public static long factorial(int n) {
