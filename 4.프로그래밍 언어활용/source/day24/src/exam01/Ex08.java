@@ -12,8 +12,10 @@ public class Ex08 {
 
         Thread.sleep(2000);
         th1.suspend(); // 일시정지, resume하면 다시 시작됨
+
         Thread.sleep(2000);
         th2.suspend(); // 일시정지
+
         Thread.sleep(3000);
         th1.stop(); // 정지(종료)
         th2.stop(); // 정지(종료)
@@ -42,7 +44,11 @@ class Ex08_1 implements Runnable {
                 System.out.println(th.getName());
                 try {
                     Thread.sleep(1000);
-                } catch (InterruptedException e) {}
+                } catch (InterruptedException e) {
+                    System.out.println("interrupted");
+                }
+            } else { // 정지상태 -> 다른 쓰레드로 바로 작업양보
+                th.yield();
             }
         }
     }
@@ -52,11 +58,16 @@ class Ex08_1 implements Runnable {
     }
     public void suspend() {
         suspended = true;
+        th.interrupt();
+        System.out.println("suspend - interrupted");
     }
     public void resume() {
         suspended = false;
+        th.interrupt();
     }
     public void stop() {
         stopped = true;
+        th.interrupt();
+        System.out.println("stop - interrupted");
     }
 }
