@@ -3,3 +3,4 @@
 *.imi
 /dbeaver
 /apache-maven-*
+/gradle-*
