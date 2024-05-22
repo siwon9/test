@@ -8,12 +8,11 @@ public class Q1 {
     public static void main(String[] args) {
 
                 int[] array = {7, 77, 17};
-                int num = 7;
-                String numStr = String.valueOf(num);
+                String num = "7";
 
                 long count = Arrays.stream(array)
                         .mapToObj(String::valueOf)
-                        .mapToLong(s -> s.chars().filter(ch -> ch == numStr.charAt(0)).count())
+                        .mapToLong(s -> s.chars().filter(ch -> ch == num.charAt(0)).count())
                         .sum();
 
                 System.out.println(count);
