@@ -5,11 +5,13 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Ex02 {
-    private String url = "jdbc:oracle:thin:@localhost:1521:XE";
-    private String user = "STUDY";
-    private String password = "oracle";
+    private String url = "jdbc:oracle:thin:@localhost:1521:EE";
+    private String user = "SCOTT";
+    private String password = "tiger";
 
     @BeforeAll // 모든 테스트 메서드 호출 전에 단한번 실행 - 공통 초기ㅣ화
     static void init() {
@@ -30,7 +32,7 @@ public class Ex02 {
             pstmt.setString(1,"%" + keyword + "%");
 
             ResultSet rs = pstmt.executeQuery();
-
+            List<Member> members = new ArrayList<>();
             while(rs.next()) {
                 long userNo = rs.getLong("USER_NO");
                 String userId = rs.getString("USER_ID");
@@ -39,6 +41,16 @@ public class Ex02 {
                 String mobile = rs.getString("MOBILE");
                 LocalDateTime regDt = rs.getTimestamp("REG_DT").toLocalDateTime();
                 //Timestamp ts = rs.getTimestamp("REG_DT");
+
+                Member member = new Member();
+                member.setUserNo(userNo);
+                member.setUserNm(userId);
+                member.setUserPw(userPw);
+                member.setUserNm(userNm);
+                member.setMobile(mobile);
+                member.setRegDt(regDt);
+
+                members.add(member);
 
                 System.out.printf("USER_NO:%d, USER_ID:%s, USER_PW:%s," +
                                 "USER_NM:%s, MOBILE:%s, REG_DT:%s%n",
