@@ -44,7 +44,15 @@ public class Ex03 {
         List<Member> members = mapper.getList4(userIds);
         members.forEach(System.out::println);
     }
+
+    @Test
+    void test4() {
+        MemberMapper mapper = session.getMapper(MemberMapper.class);
+        List<Member> members = mapper.getList5(10);
+        members.forEach(System.out::println);
+    }
 }
+
 
 
 
