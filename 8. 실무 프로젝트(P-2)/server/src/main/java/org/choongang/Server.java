@@ -1,9 +1,16 @@
 package org.choongang;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -13,8 +20,11 @@ import java.util.function.Consumer;
 public class Server {
     private ServerSocket serverSocket;
     private ExecutorService threadPool;
+    private ObjectMapper om;
+    private Map<String, Socket> clients; // 접속한 사용자(소켓)
 
     public Server() {
+
         try {
             serverSocket = new ServerSocket(9999);
         } catch (IOException e) {
@@ -22,6 +32,11 @@ public class Server {
         }
 
         threadPool = new ThreadPoolExecutor(2, 100, 120L, TimeUnit.SECONDS, new SynchronousQueue<>(){});
+
+        om = new ObjectMapper();
+        om.registerModule(new JavaTimeModule());
+
+        clients = new HashMap<>();
     }
 
     public void start() {
@@ -34,13 +49,44 @@ public class Server {
 
                 // 수신 처리
                 handler.input(data -> {
-                    System.out.println(data);
+                    SocketData sData = toObject(data);
+                    String from = sData.getFrom(); // 보낸 사람
+                    // 최초 접속인 경우, 사용자(소켓) 등록
+                    if (!clients.containsKey(from)) {
+                        clients.put(from, socket);
+                    }
+
+                    // 전송
+                    String to = sData.getTo();
+                    handler.send(to, sData);
                 });
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    private SocketData toObject(String json) {
+        SocketData data = null;
+        try {
+            data = om.readValue(json, SocketData.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return data;
+    }
+
+    private String toJSON(SocketData sData) {
+        String data = null;
+        try {
+            data = om.writeValueAsString(sData);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return data;
     }
 
     class SocketHandler {
@@ -56,7 +102,7 @@ public class Server {
                 try(DataInputStream dis = new DataInputStream(socket.getInputStream())) {
 
                     while(true) {
-                        if (socket == null || handler == null) {
+                        if (socket == null || socket.isClosed() || handler == null) {
                             Thread.currentThread().yield();
                             break;
                         }
@@ -72,10 +118,32 @@ public class Server {
         }
 
         // 전송 처리
-        public void output() {
-            threadPool.execute(() -> {
+        public void output(Socket toSocket, SocketData data) {
+            if (toSocket == null || toSocket.isClosed() || data == null) {
+                return;
+            }
 
+            threadPool.execute(() -> {
+                try(DataOutputStream dos = new DataOutputStream(toSocket.getOutputStream())) {
+
+                    String json = toJSON(data);
+                    dos.writeUTF(json);
+
+                } catch(IOException e) {
+                    e.printStackTrace();
+                }
             });
+        }
+
+        public void send(String to, SocketData data) {
+            if (to.equals("all")) { // 전체 전송
+                clients.values().forEach(s -> output(s, data));
+            } else { // 특정 사용자 전송
+                Socket s = clients.get(to);
+                if (s != null) {
+                    output(s, data);
+                }
+            }
         }
     }
 }
