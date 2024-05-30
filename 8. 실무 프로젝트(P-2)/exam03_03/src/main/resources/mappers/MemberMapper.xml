@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mapper.MemberMapper">
-    <resultMap id="member" type="member.Member">
+<mapper namespace="mappers.MemberMapper">
+    <resultMap id="memberMap" type="member.Member">
         <result column="USER_NO" property="userNo" />
         <result column="USER_ID" property="userId" />
         <result column="USER_PW" property="userPw" />
@@ -12,7 +12,7 @@
         <result column="REG_DT" property="regDt" />
         <result column="MOD_DT" property="modDt" />
     </resultMap>
-    <select id="getList" resultMap="memberMapper">
+    <select id="getList" resultMap="memberMap">
         SELECT * FROM MEMBER
     </select>
 

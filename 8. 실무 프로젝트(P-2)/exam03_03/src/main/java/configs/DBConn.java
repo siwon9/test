@@ -12,7 +12,7 @@ public class DBConn {
     private static SqlSessionFactory factory;
     static {
         try {
-            Reader reader = Resources.getResourceAsReader("configs/mybatis-config.xml");
+            Reader reader = Resources.getResourceAsReader("configs/mybatis-configs.xml");
             factory = new SqlSessionFactoryBuilder().build(reader);
         } catch(IOException e) {
             e.printStackTrace();
