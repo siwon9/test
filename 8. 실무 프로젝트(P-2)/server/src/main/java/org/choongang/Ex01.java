@@ -43,8 +43,5 @@ public class Ex01 {
                 dos.writeUTF(json);
             }
         }
-
-
-
     }
 }
