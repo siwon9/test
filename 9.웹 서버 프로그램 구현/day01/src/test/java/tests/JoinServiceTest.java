@@ -90,7 +90,7 @@ public class JoinServiceTest {
     void requiredFieldEachTest(RequestJoin form, String keyword) {
         ValidationException thrown = assertThrows(ValidationException.class, () -> {
             joinService.process(form);
-        });
+        }, keyword + "오류!");
 
         String message = thrown.getMessage();
         assertTrue(message.contains(keyword));
