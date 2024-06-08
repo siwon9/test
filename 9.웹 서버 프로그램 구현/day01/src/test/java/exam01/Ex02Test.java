@@ -6,22 +6,22 @@ import org.junit.jupiter.api.*;
 public class Ex02Test {
 
     @BeforeAll
-    static void beforeAll() {
+    static void beforeAll() { // 모든게 시작하기 전에 한번
         System.out.println("Before All");
     }
 
     @AfterAll
-    static void afterAll() {
+    static void afterAll() { // 모든게 다 끝나고 한번
         System.out.println("After All");
     }
 
     @BeforeEach
-    void beforeEach() {
+    void beforeEach() { //처음에 각각 한번씩
         System.out.println("Beafore Each");
     }
 
     @AfterEach
-    void afterEach() {
+    void afterEach() { // 나중에 각각 한번씩
         System.out.println("After Each");
     }
 
