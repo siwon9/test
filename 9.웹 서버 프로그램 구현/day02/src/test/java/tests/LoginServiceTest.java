@@ -1,10 +1,16 @@
 package tests;
 
+import com.github.javafaker.Faker;
+import global.exceptions.ValidationException;
 import jakarta.servlet.http.HttpServletRequest;
 import member.services.LoginService;
+import member.validators.LoginValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Locale;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -15,14 +21,15 @@ public class LoginServiceTest {
 
     private LoginService loginService;
     private HttpServletRequest request;
+    private Faker faker;
 
     @BeforeEach
     void init() {
-        loginService = new LoginService();
+        loginService = new LoginService(new LoginValidator());
 
         // HttpServletRequest 모의 객체 생성
         request = mock(HttpServletRequest.class);
-
+        faker = new Faker(Locale.KOREAN);
     }
 
     void setParamData(String name, String value) {
@@ -30,8 +37,9 @@ public class LoginServiceTest {
     }
 
     void setSuccessDate() {
-        setParamData("email", "test01@test.org");
-        setParamData("password","12345678");
+        String password = faker.regexify("\\w{8}").toLowerCase();
+        setParamData("email", faker.internet().emailAddress());
+        setParamData("password", password);
     }
 
     @Test
@@ -46,6 +54,9 @@ public class LoginServiceTest {
     @Test
     @DisplayName("필수 항목(아이디, 비밀번호) 검증, 검증 실패시 ValidationException 발생")
     void requiredFieldTest() {
-
+        // 아이디 필수 항목 검증
+        assertThrows(ValidationException.class, () -> {
+           loginService.process(request);
+        });
     }
 }
