@@ -4,7 +4,9 @@ public class Q3 {
     private int studentID;
     private String name;
 
-    public Q3 () {};
+    public Q3 () {
+
+    };
 
     public Q3 (int studentID, String name) {
         this.studentID = studentID;
