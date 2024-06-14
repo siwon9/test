@@ -23,7 +23,8 @@ public class BoardListController extends HttpServlet {
 
         req.setAttribute("items", items);
 
-        RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/templates/board/list.jsp");
+        RequestDispatcher rd = req.getRequestDispatcher
+                ("/WEB-INF/templates/board/list.jsp");
         rd.forward(req, resp);
     }
 }
