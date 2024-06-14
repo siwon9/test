@@ -7,9 +7,9 @@
 
 pageContext.num : ${pageScope.num}<br>
 request.num : ${requestScope.num}<br>
-application.num : ${applicationScope.num}<br>
+application.num : ${applicationScope.['num']}<br>
 
-
+max-num : ${pageScope.['max-num']}<br>
 
 
 
