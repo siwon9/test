@@ -15,3 +15,5 @@
     <logger name="org.choongang.member.mapper" lever="DEBUG" /> <!-- 매퍼가 추가되면 추가하면됨 -->
 
 </configuration>
+
+
