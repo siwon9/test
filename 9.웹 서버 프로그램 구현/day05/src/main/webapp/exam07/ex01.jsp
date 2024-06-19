@@ -12,4 +12,3 @@ style: full - <fmt:formatDate type="both" value="${date}" dateStyle="full" timeS
 style: short - <fmt:formatDate type="both" value="${date}" dateStyle="short" timeStyle="short" /><br>
 
 pattern - <fmt:formatDate type="both" value="${date}" pattern="yyyy.MM.dd HH:mm:ss" /><br>
-
