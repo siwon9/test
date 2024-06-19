@@ -8,7 +8,7 @@ import lombok.Data;
 public class RequestJoin {
     private String email;
     private String password;
-    private String confirm_password;
+    private String confirmPassword;
     private String userName;
     private boolean termsAgree;
 }
