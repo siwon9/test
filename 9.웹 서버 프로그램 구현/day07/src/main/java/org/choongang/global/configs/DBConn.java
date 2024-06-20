@@ -25,7 +25,7 @@ public class DBConn {
     }
     public static SqlSession getSession(boolean autoCommit) {
         String mode = System.getenv("mode");
-        if (mode != null || mode.equals("test")) autoCommit = false;
+        if (mode != null && mode.equals("test")) autoCommit = false;
 
         return factory.openSession(autoCommit);
     }
