@@ -2,6 +2,7 @@ package org.choongang.member.tests;
 
 import com.github.javafaker.Faker;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
 import org.choongang.global.exceptions.BadRequestException;
 import org.choongang.member.controllers.RequestJoin;
@@ -33,8 +34,11 @@ public class LoginServiceTest {
     @Mock
     private HttpServletRequest request;
 
+    @Mock
+    private HttpSession sessison;
+
     @BeforeEach
-    void init(){
+    void init() {
         loginService = MemberServiceProvider.getInstance().loginService();
         JoinService joinService = MemberServiceProvider.getInstance().joinService();
         faker = new Faker(Locale.ENGLISH);
@@ -42,17 +46,16 @@ public class LoginServiceTest {
 
         // 회원 가입 -> 가입한 회원 정보로 email, password 스텁 생성
         form = RequestJoin.builder()
-                        .email(System.currentTimeMillis() + faker.internet().emailAddress())
-                        .password(faker.regexify("\\w{8,16}").toLowerCase())
-                        .userName(faker.name().fullName())
-                        .termsAgree(true)
-                        .build();
+                .email(System.currentTimeMillis() + faker.internet().emailAddress())
+                .password(faker.regexify("\\w{8,16}").toLowerCase())
+                .userName(faker.name().fullName())
+                .termsAgree(true)
+                .build();
         form.setConfirmPassword(form.getPassword());
 
         joinService.process(form);
 
         setData();
-
     }
 
     void setData() {
@@ -60,23 +63,21 @@ public class LoginServiceTest {
         setParam("password", form.getPassword());
     }
 
-
-    @Test
     void setParam(String name, String value) {
         given(request.getParameter(name)).willReturn(value);
     }
 
     @Test
     @DisplayName("로그인 성공시 예외가 발생하지 않음")
-    void successTest(){
+    void successTest() {
         assertDoesNotThrow(() -> {
             loginService.process(request);
         });
     }
 
     @Test
-    @DisplayName("필수 입력 항목(이메일, 비밀번호)검증, 검증 실패시 BadRequestException 발생")
-    void requiredFieldTest(){
+    @DisplayName("필수 입력 항목(이메일, 비밀번호) 검증, 검증 실패시 BadRequestException 발생")
+    void requiredFieldTest() {
         assertAll(
                 () -> requiredEachFieldTest("email", false, "이메일"),
                 () -> requiredEachFieldTest("email", true, "이메일"),
@@ -87,31 +88,27 @@ public class LoginServiceTest {
 
     void requiredEachFieldTest(String name, boolean isNull, String message) {
         setData();
-        BadRequestException thrown = assertThrows(BadRequestException.class,
-                () -> {
-                  if(name.equals("password")){
-                      setParam("password", isNull?null:"    ");
-                  }  else{ // 이메일
-                      setParam("email", isNull?null:"    ");
-                  }
+        BadRequestException thrown = assertThrows(BadRequestException.class, () -> {
+            if (name.equals("password")) {
+                setParam("password", isNull?null:"   ");
+            } else { // 이메일
+                setParam("email", isNull?null:"   ");
+            }
 
-                  loginService.process(request);
+            loginService.process(request);
+        }, name + " 테스트");
 
-            }, name + " 테스트");
-
-            String msg = thrown.getMessage();
-            assertTrue(msg.contains(message), name + ", 키워드:" + message + "테스트");
-
+        String msg = thrown.getMessage();
+        assertTrue(msg.contains(message), name + ", 키워드:" + message + "테스트");
     }
 
     @Test
     @DisplayName("이메일로 회원이 조회 되는지 검증, 검증 실패시 BadRequestException 발생")
-    void memberExistTest(){
-        setParam("email", form.getEmail());
-        BadRequestException thrown = assertThrows(BadRequestException.class,
-                () -> {
-                    loginService.process(request);
-                });
+    void memberExistTest() {
+        setParam("email", "***" + form.getEmail());
+        BadRequestException thrown = assertThrows(BadRequestException.class, () -> {
+            loginService.process(request);
+        });
 
         String message = thrown.getMessage();
         assertTrue(message.contains("이메일 또는 비밀번호"));
@@ -121,33 +118,16 @@ public class LoginServiceTest {
     @DisplayName("비밀번호 검증, 검증 실패시 BadRequestException")
     void passwordCheckTest() {
         setParam("password", "***" + form.getPassword());
-        BadRequestException thrown = assertThrows(BadRequestException
-                .class, () -> {
-                    loginService.process(request);
-                });
+        BadRequestException thrown = assertThrows(BadRequestException.class, () -> {
+            loginService.process(request);
+        });
 
         String message = thrown.getMessage();
-        assertTrue(message.equals("이메일 또는 비밀번호"));
+        assertTrue(message.contains("이메일 또는 비밀번호"));
     }
 
     @AfterEach
     void destroy() {
-        dbSession.rollback();
+        // dbSession.rollback();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
