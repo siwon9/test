@@ -16,16 +16,18 @@ import java.io.PrintWriter;
 import static org.choongang.global.MessageUtil.alertError;
 import static org.choongang.global.MessageUtil.go;
 
+
 @WebServlet("/member/join")
 public class JoinController extends HttpServlet {
+
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-
-        RequestDispatcher rd = req.getRequestDispatcher
+                RequestDispatcher rd = req.getRequestDispatcher
                 ("/WEB-INF/templates/member/join.jsp");
         rd.forward(req, resp);
     }
+
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp)

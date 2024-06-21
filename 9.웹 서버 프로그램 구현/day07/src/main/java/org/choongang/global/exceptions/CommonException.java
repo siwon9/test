@@ -16,6 +16,7 @@ public class CommonException extends RuntimeException{
     }
 
     public int getStatus() {
+
         return status;
     }
 }

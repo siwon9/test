@@ -23,7 +23,7 @@ public class MessageUtil {
         resp.setContentType("text/html; charset=UTF-8");
         PrintWriter out = resp.getWriter();
         // out.printf("<script>%s.location.href='%s';</script>", target,url);
-        out.printf("<script>%s.location.replace='%s';</script>", target,url);
+        out.printf("<script>%s.location.replace('%s');</script>", target,url);
     }
 
     public static void go(String url, HttpServletResponse resp) throws IOException{

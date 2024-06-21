@@ -23,9 +23,11 @@ public class DBConn {
            e.printStackTrace();
         }
     }
+
     public static SqlSession getSession(boolean autoCommit) {
         String mode = System.getenv("mode");
         if (mode != null && mode.equals("test")) autoCommit = false;
+            //환경변수가 뭐야??
 
         return factory.openSession(autoCommit);
     }

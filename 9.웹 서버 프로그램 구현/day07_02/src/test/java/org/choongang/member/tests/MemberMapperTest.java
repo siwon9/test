@@ -5,6 +5,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.choongang.global.configs.DBConn;
 import org.choongang.member.entities.Member;
 import org.choongang.member.mapper.MemberMapper;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,6 +40,12 @@ public class MemberMapperTest {
         long cnt = mapper.exist(member.getEmail()); //등록 회원 있는지 테스트
         assertEquals(1L,cnt);
 
-        Member memb
+        Member member2 = mapper.get(member.getEmail()); // 이메일로 조회되는 회원이 있는지 테스트
+        assertEquals(member.getEmail(), member2.getEmail());
+    }
+
+    @AfterEach
+    void destroy() {
+        session.rollback();
     }
 }
