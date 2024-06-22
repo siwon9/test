@@ -14,7 +14,7 @@ public class FileDownloadController extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        File file = new File("/Users/siwon/uploads/안개낀계곡.jpg");
+        File file = new File("/Users/siwon/uploads/1.jpg");
         String contentType = Files.probeContentType(file.toPath());
         // 윈도우즈에서 한글 깨짐문제 발생, 인코딩 UTF-8 -> CPC949, EUC-KR, ISO8859_1
         String fileName = new String(file.getName().getBytes(),"ISO8859_1");
