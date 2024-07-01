@@ -2,24 +2,27 @@
 <%@ tag pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <%@ attribute name="header" fragment="true" %>
 <%@ attribute name="footer" fragment="true" %>
 <%@ attribute name="commonCss" fragment="true" %>
 <%@ attribute name="commonJs" fragment="true" %>
 <%@ attribute name="title" %>
 <fmt:setBundle basename="messages.commons" />
-<c:url var="cssUrl" value="/static/css/" />
-<c:url var="jsUrl" value="/static/js/" />
+<c:url var="cssUrl" value="/css/" />
+<c:url var="jsUrl" value="/js/" />
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="rootUrl" content="<c:url value='/' />">
         <title>
          <c:if test="${!empty title}">
          ${title} -
          </c:if>
          <fmt:message key="SITE_TITLE" />
         </title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
         <link rel="stylesheet" type="text/css" href="${cssUrl}style.css">
         <jsp:invoke fragment="commonCss" />
         <c:if test="${addCss != null}">
@@ -28,6 +31,7 @@
             </c:forEach>
         </c:if>
 
+        <script src="${jsUrl}layer.js"></script>
         <script src="${jsUrl}common.js"></script>
         <jsp:invoke fragment="commonJs" />
         <c:if test="${addScript != null}">
@@ -47,5 +51,5 @@
             <jsp:invoke fragment="footer" />
         </footer>
     </body>
-    <iframe name="ifrmProcess" class-="dn"></iframe>
+    <iframe name="ifrmProcess" class="dn"></iframe>
 </html>
