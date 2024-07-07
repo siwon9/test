@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 //@ComponentScan(basePackages = "exam01.member")
-@ComponentScan("exam01.member") // @Service까지 다 스캔함
+@ComponentScan("exam01.member") // 스캔 대상 암기해야함. 해당 패키지의 모든 스캔대상을 스캔해서 인식한다.
 public class AppCtx3 {
 /*
     @Bean

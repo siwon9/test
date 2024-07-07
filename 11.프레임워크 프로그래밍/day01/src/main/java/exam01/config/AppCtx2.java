@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 public class AppCtx2 {
 
     @Bean
-    @Qualifier("mDao")
+    @Qualifier("mDao") // 똑같은 이름 있으면 구별하기 위해 적어주는것
     public MemberDao memberDao() {
         return new MemberDao();
     }

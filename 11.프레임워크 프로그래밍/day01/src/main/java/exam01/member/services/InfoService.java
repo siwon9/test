@@ -20,7 +20,6 @@ public class InfoService {
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy.MM.dd");
 
     @Autowired
-
     public void setMemberDao(Optional<MemberDao> opt) {
         this.memberDao = opt.get();
     }

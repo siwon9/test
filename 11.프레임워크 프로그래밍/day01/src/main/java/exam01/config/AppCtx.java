@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Import;
 
 //설정 클래스 - 스프링 컨터이너가 관리할 객체를 정의, 설정
 @Import(AppCtx2.class)
-@Configuration
+@Configuration // @Bean 있는지 없는지 확인하는거
 public class AppCtx {
 
     @Bean
