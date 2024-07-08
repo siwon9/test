@@ -19,7 +19,7 @@ public class InfoService {
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy.MM.dd");
 
-    @Autowired
+    @Autowired//스프링 프레임워크가 자동으로 해당 필드에 맞는 빈(Bean)을 주입
     public void setMemberDao(Optional<MemberDao> opt) {
         this.memberDao = opt.get();
     }

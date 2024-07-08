@@ -12,14 +12,14 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor // final로 되거나 @NonNull 표시된 애들로 생성자 만들어준다.
 public class JoinService {
 
-    //@Autowired
+    //@Autowired  의존성 주입을 해주는게 가장 중요한 역할이다.
     private final JoinValidator validator;
 
     //@Autowired
-    @NonNull
+    @NonNull // 필수 요소임을 표시하는 것
     private MemberDao memberDao;
 
     // 의존 관계 - 없으면 객체 생성 X
