@@ -20,15 +20,18 @@ public class ProxyCalculator {
         System.out.println("After..");
     }
 
-    @AfterReturning("publicTarget()")
-    public void afterReturning(JoinPoint joinPoint, Object returnValue) throws Throwable {
+    @AfterReturning(value="publicTarget()", returning="returnValue")
+    public void afterReturning(JoinPoint joinPoint, Object returnValue)  {
         System.out.println("AfterReturning: " + returnValue);
     }
 
-//    @AfterThrowing
-//    public void afterThrowing
+    @AfterThrowing(value="publicTarget()", throwing="e")
+    public void afterThrowing(JoinPoint joinPoint, Throwable e){
+        System.out.println("afterThrowing");
+        e.printStackTrace();
+    }
 
-    @Around("publicTarget()")
+    @Around(value = "publicTarget()")
     public Object process(ProceedingJoinPoint joinPoint) throws Throwable {
 
 //        Signature sig = joinPoint.getSignature(); // 호출된 메서드 정의 정보
@@ -56,3 +59,6 @@ public class ProxyCalculator {
         }
     }
 }
+
+
+
