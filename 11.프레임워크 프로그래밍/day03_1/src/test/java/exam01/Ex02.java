@@ -14,6 +14,11 @@ public class Ex02 {
         long result = cal.factorial(10L);
         System.out.println(result);
 
+        long result2 = cal.factorial(10L);
+        System.out.println(result2);
+
+        long result3 = cal.factorial(10L);
+        System.out.println(result3);
         ctx.close();
     }
 }
