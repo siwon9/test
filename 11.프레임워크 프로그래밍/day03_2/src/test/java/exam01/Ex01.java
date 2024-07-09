@@ -33,7 +33,6 @@ public class Ex01 {
         List<Member> members  = jdbcTemplate.query("SELECT * FROM MEMBER", this::mapper
     //            (rs, num) -> mapper(rs,num) 이거보다 더 짧게쓰면 메서드 참조를해서 그냥 디스로 갈긴다.
     );
-
         members.forEach(System.out::println);
     }
 

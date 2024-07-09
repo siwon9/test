@@ -10,6 +10,7 @@ public class ProxyCalculator {
     @Pointcut("execution(* exam01..*(..))") // exam01쪽 모든 메서드를 호출해준다.
     public void publicTarget() {}
 
+    // 의미가 명확해서 뒤에 advice 생략
     @Before("publicTarget()")
     public void before(JoinPoint joinPoint){
         System.out.println("Before..");
