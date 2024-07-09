@@ -10,6 +10,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import java.time.LocalDateTime;
 
 public class Ex01 {
+
+
     @Test
     void test1() {
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppCtx.class);
