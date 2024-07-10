@@ -9,8 +9,8 @@ import org.springframework.core.annotation.Order;
 import java.util.HashMap;
 import java.util.Map;
 
-@Aspect // 얘는 뭘까 -->
-@Order(1)
+@Aspect
+@Order(1) // 같은 joinpoint가 있으면 순서를 부여해서 먼저 실행한다.
 public class ProxyCache {
 
     private Map<Long, Object> data = new HashMap<>();
