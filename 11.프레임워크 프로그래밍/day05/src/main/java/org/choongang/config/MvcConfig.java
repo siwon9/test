@@ -3,10 +3,7 @@ package org.choongang.config;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 
 @Configuration
 @EnableWebMvc
@@ -17,6 +14,12 @@ public class MvcConfig implements WebMvcConfigurer {
     public void configureDefaultServletHandling
             (DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
+    }
+
+    @Override // 초반에 작업할 때 사용하게 된다.
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/**")  // **는 모든경로를 의미한다.
+                .addResourceLocations("classpath:/static/");
     }
 
     @Override
