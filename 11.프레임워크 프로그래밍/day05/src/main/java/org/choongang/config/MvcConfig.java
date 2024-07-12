@@ -8,8 +8,8 @@ import org.springframework.web.servlet.config.annotation.*;
 @Configuration
 @EnableWebMvc
 @ComponentScan("org.choongang")
-@Import(DBConfig.class)
-public class MvcConfig implements WebMvcConfigurer {
+@Import({DBConfig.class, MessageConfig.class})
+public class MvcConfig implements WebMvcConfigurer { // MVC 설정을 모아주는 클래스
     @Override
     public void configureDefaultServletHandling
             (DefaultServletHandlerConfigurer configurer) {
@@ -28,4 +28,12 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.jsp("/WEB-INF/templates/", ".jsp" );
     }
 
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/")
+                .setViewName("main/index");
+
+        registry.addViewController("/mypage/**")
+                .setViewName("mypage/index");
+    }
 }
