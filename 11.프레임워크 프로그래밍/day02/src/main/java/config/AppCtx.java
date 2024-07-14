@@ -36,8 +36,6 @@ excludeFilters = @ComponentScan.Filter(type = FilterType.ASPECTJ,
 @ComponentScan({"member", "board"})
 public class AppCtx {
 
-
-
     @Scope("prototype") // 매번 새로운 객체가 만들어진다
     // 이렇게 직접 init하고 destroy를 설정해준다. 수동으로 가져온 클래스안에는 시작과 끝을 위한 메서드는 반드시 존재한다.
     @Bean(initMethod = "init", destroyMethod = "destroy")

@@ -18,7 +18,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement // 트랜젝션 관련 설정이 완료가 된다.
 @MapperScan("org.choongang")
-@EnableJdbcRepositories("org.choongang") // 이게 뭘까?
+@EnableJdbcRepositories("org.choongang")
+// Spring Data JDBC를 사용하여 리포지토리를 활성화하고,
+// 특정 패키지에서 리포지토리 인터페이스를 검색하고 등록하도록 Spring 컨텍스트에 지시
 public class DBConfig extends AbstractJdbcConfiguration {
 
     @Bean(destroyMethod = "close")
