@@ -5,8 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.choongang.member.controllers.RequestJoin;
 import org.choongang.member.mappers.MemberMapper;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 @Component
@@ -30,28 +30,41 @@ public class JoinValidator implements Validator {
         String userName = form.getUserName();
         boolean agree = form.isAgree();
 
-        // 필수 항목 검증
+        /*
+        // 1. 필수 항목 검증
         ValidationUtils.rejectIfEmptyOrWhitespace(
                 errors, "email","Required", "이메일을 입력하세요.");
         ValidationUtils.rejectIfEmptyOrWhitespace(
                 errors, "password", "Required", "비밀번호를 입력하세요.");
         ValidationUtils.rejectIfEmptyOrWhitespace(
-                errors, "confirmpassword", "Required", "비밀번호를 확인하세요.");
+                errors, "confirmPassword", "Required", "비밀번호를 확인하세요.");
         ValidationUtils.rejectIfEmptyOrWhitespace(
                 errors, "userName", "Required", "회원명을 입력하세요.");
         if(!agree) {
             errors.rejectValue("agree", "Required", "회원가입 약관에 동의하세요.");
         }
+        */
+
+        // 2. 이메일 중복 여부(회원 가입되어 있는지 체크) // DB에 접근할 수 있는 DAO 객체가 필요하다.
+        if(StringUtils.hasText(email)&& mapper.exists(email) !=0L){
+            errors.rejectValue("email", "Duplicated");
+        }
+
+        /*
+        // 3. 비밀번호 자리수 체크(8자리)
+        if (StringUtils.hasText(password) && password.length() < 8) {
+            errors.rejectValue("password", "Length");
+        }
+         */
+
+        // 4. 비밀번호, 비밀번호 확인 일치 여부
+        if(StringUtils.hasText(confirmPassword) && StringUtils.hasText(confirmPassword)
+        && !password.equals(confirmPassword)) {
+            errors.rejectValue("confirmPassword","MisMatch");
+        }
     }
 //    @Override
 //    public void check(RequestJoin form) {
-//
-//        /**
-//         * 1. 필수 항목 검증 (email, password, confirmPassword, userName, agree)
-//         * 2. 이메일 중복 여부(회원이 가입되어 있는지 체크)
-//         * 3. 비밀번호 자리수 체크(8자리)
-//         * 4. 비밀번호, 비밀번호 확인 일치 여부
-//         */
 //
 //        String email = form.getEmail();
 //        String password = form.getPassword();
