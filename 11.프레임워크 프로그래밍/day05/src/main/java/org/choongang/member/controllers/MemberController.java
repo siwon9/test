@@ -4,7 +4,6 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.choongang.member.entities.Member;
 import org.choongang.member.services.JoinService;
 import org.choongang.member.services.LoginService;
 import org.choongang.member.validators.JoinValidator;
@@ -48,15 +47,23 @@ public class MemberController {
 
     @GetMapping("/login")
     public String login(@ModelAttribute RequestLogin form,
-                        @SessionAttribute(name="member", required = false)Member member) {
-
+                        @CookieValue(name="savedEmail", required = false) String savedEmail) {
+        //@SessionAttribute(name="member", required = false)Member member) {
+/*
         if(member != null) {
             log.info(member.toString());
         }
 
         return "member/login";
     }
+ */
 
+        if(savedEmail != null) {
+            form.setSaveEmail(true);
+            form.setEmail(savedEmail);
+        }
+        return "member/login";
+    }
 
     @PostMapping("/login")
     public String loginPs(@Valid RequestLogin form, Errors errors) {
