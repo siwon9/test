@@ -1,19 +1,24 @@
 package org.choongang.member.controllers;
 
-import jakarta.validation.constraints.AssertTrue;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 @Data
 public class RequestJoin {
-    @NotBlank
+    @NotBlank// 에노테이션 이름이 에러코드가 된다.
+    @Email
     private String email;
+
+    @Size(min=8)
     @NotBlank
     private String password;
+
     @NotBlank
     private String confirmPassword;
+
     @NotBlank
     private String userName;
+
     @AssertTrue
     private boolean agree;
 }
