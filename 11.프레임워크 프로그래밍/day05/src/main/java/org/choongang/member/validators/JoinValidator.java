@@ -6,6 +6,7 @@ import org.choongang.member.controllers.RequestJoin;
 import org.choongang.member.mappers.MemberMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 @Component
@@ -22,9 +23,26 @@ public class JoinValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
 
+        RequestJoin form = (RequestJoin) target;
+        String email = form.getEmail();
+        String password = form.getPassword();
+        String confirmPassword = form.getConfirmPassword();
+        String userName = form.getUserName();
+        boolean agree = form.isAgree();
+
+        // 필수 항목 검증
+        ValidationUtils.rejectIfEmptyOrWhitespace(
+                errors, "email","Required", "이메일을 입력하세요.");
+        ValidationUtils.rejectIfEmptyOrWhitespace(
+                errors, "password", "Required", "비밀번호를 입력하세요.");
+        ValidationUtils.rejectIfEmptyOrWhitespace(
+                errors, "confirmpassword", "Required", "비밀번호를 확인하세요.");
+        ValidationUtils.rejectIfEmptyOrWhitespace(
+                errors, "userName", "Required", "회원명을 입력하세요.");
+        if(!agree) {
+            errors.rejectValue("agree", "Required", "회원가입 약관에 동의하세요.");
+        }
     }
-
-
 //    @Override
 //    public void check(RequestJoin form) {
 //

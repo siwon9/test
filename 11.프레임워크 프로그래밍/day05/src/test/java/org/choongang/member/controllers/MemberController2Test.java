@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 
 @SpringJUnitWebConfig
 @ContextConfiguration(classes = MvcConfig.class)
-public class MemberControllerTest {
+public class MemberController2Test {
 
     @Autowired // 다형성 때문에 WebApplicationContext를 사용한다. 뭐가들어올지 모르기때문
     private WebApplicationContext ctx;
