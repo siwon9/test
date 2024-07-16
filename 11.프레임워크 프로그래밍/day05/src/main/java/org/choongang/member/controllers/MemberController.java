@@ -89,40 +89,40 @@ public class MemberController {
         return "redirect:/member/login";
     }
 
+
     @GetMapping("/list")
     public String list(@Valid @ModelAttribute MemberSearch search, Errors errors) {
-    //@ModelAttribute 어노테이션이 컨트롤러 메서드의 매개변수에 사용되면,
-    // 스프링은 해당 매개변수를 모델 속성으로 간주하고,
-    // HTTP 요청 파라미터나 세션 속성 등에서 값을 바인딩합니다.
-    // 주로 폼 데이터를 객체로 바인딩할 때 사용됩니다.
+
         log.info(search.toString());
 
         boolean result = false;
         if (!result) {
-            throw new BadRequestException("예외 발생!");
+            throw new BadRequestException("예외 발생!!!");
         }
+
 
         return "member/list";
     }
 
-    @ResponseBody // JSON 할 때 배움. 반환값을 다양하게 해줌??
+    @ResponseBody
     @GetMapping({"/info/{id}/{id2}", "/info/{id}"})
-    public void info(@PathVariable("id") String email,
-                     @PathVariable(value = "id2", required = false) String email2 ) {
-    // 없으면 오류가 발생하고, null값을 넣고싶으면 default를 false로 바꿔주면된다.
+    public void info(@PathVariable("id") String email, @PathVariable(name="id2", required = false) String email2) {
+
         log.info("email:{}, email2:{}", email, email2);
     }
 
-    @ExceptionHandler(BadRequestException.class)
-    public String errorHandler() {
 
-        return "error/common";
-    }
+//    @ExceptionHandler(Exception.class)
+//    public String errorHandler(Exception e, HttpServletRequest request, HttpServletResponse response, Model model) {
+//        e.printStackTrace();
+//        log.info("MemberController에서 유입");
+//        return "error/common";
+//    }
+
 
     /*
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.setValidator(joinValidator);
     }*/
-
 }
