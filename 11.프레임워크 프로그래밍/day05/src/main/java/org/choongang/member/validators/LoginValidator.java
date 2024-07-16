@@ -40,6 +40,7 @@ public class LoginValidator implements Validator {
                 errors.reject("Check.emailPassword");
             }
 
+
             if(member != null && StringUtils.hasText(password) && !BCrypt.checkpw(password, member.getPassword())) {
                 //errors.rejectValue("password", "Check.emailPassword");
                 errors.reject("Check.emailPassword");

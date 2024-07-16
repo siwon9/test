@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.choongang.global.exceptions.BadRequestException;
 import org.choongang.member.services.JoinService;
 import org.choongang.member.services.LoginService;
 import org.choongang.member.validators.JoinValidator;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-@Slf4j // 로그변수 추가
+@Slf4j
 @Controller
 @RequestMapping("/member")
 @RequiredArgsConstructor
@@ -24,52 +25,54 @@ public class MemberController {
     private final LoginValidator loginValidator;
     private final LoginService loginService;
 
+
+
     @GetMapping("/join")
-    public String join(@ModelAttribute RequestJoin form) { // 첫글자가 소문자로 바뀌어서 속성 추가된다.
+    public String join(@ModelAttribute RequestJoin form) {
+
         return "member/join";
     }
 
     @PostMapping("/join")
     public String joinPs(@Valid RequestJoin form, Errors errors) {
-        // 커맨드객체 앞에 Valid를 붙여줘야 검증을 해줌 실패했을때 errors, 커멘드객체 뒤에 반드시 에러가 나와야 한다. 아니면 인식하지 못함.
+        // 회원 가입 데이터 검증
+        joinValidator.validate(form, errors);
 
-        joinValidator.validate(form, errors); // 위에서 커버하지 못하는 부분만 여기서 커버한다.
         if (errors.hasErrors()) { // reject, rejectValue가 한번이라도 호출되면 true
-
             return "member/join";
         }
 
         joinService.process(form); // 회원 가입 처리
 
         return "redirect:/member/login";
-
     }
+
 
     @GetMapping("/login")
     public String login(@ModelAttribute RequestLogin form,
-                        @CookieValue(name="savedEmail", required = false) String savedEmail) {
-        //@SessionAttribute(name="member", required = false)Member member) {
-/*
-        if(member != null) {
+                        @CookieValue(name="savedEmail", required=false) String savedEmail/*,
+                        @SessionAttribute(name="member", required = false) Member member */) {
+        /*
+        if (member != null) {
             log.info(member.toString());
         }
+        */
 
-        return "member/login";
-    }
- */
-
-        if(savedEmail != null) {
+        if (savedEmail != null) {
             form.setSaveEmail(true);
             form.setEmail(savedEmail);
         }
+
         return "member/login";
     }
+
 
     @PostMapping("/login")
     public String loginPs(@Valid RequestLogin form, Errors errors) {
 
         loginValidator.validate(form, errors);
-        if(errors.hasErrors()) {
+
+        if (errors.hasErrors()) {
             return "member/login";
         }
 
@@ -86,10 +89,40 @@ public class MemberController {
         return "redirect:/member/login";
     }
 
+    @GetMapping("/list")
+    public String list(@Valid @ModelAttribute MemberSearch search, Errors errors) {
+    //@ModelAttribute 어노테이션이 컨트롤러 메서드의 매개변수에 사용되면,
+    // 스프링은 해당 매개변수를 모델 속성으로 간주하고,
+    // HTTP 요청 파라미터나 세션 속성 등에서 값을 바인딩합니다.
+    // 주로 폼 데이터를 객체로 바인딩할 때 사용됩니다.
+        log.info(search.toString());
+
+        boolean result = false;
+        if (!result) {
+            throw new BadRequestException("예외 발생!");
+        }
+
+        return "member/list";
+    }
+
+    @ResponseBody // JSON 할 때 배움. 반환값을 다양하게 해줌??
+    @GetMapping({"/info/{id}/{id2}", "/info/{id}"})
+    public void info(@PathVariable("id") String email,
+                     @PathVariable(value = "id2", required = false) String email2 ) {
+    // 없으면 오류가 발생하고, null값을 넣고싶으면 default를 false로 바꿔주면된다.
+        log.info("email:{}, email2:{}", email, email2);
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    public String errorHandler() {
+
+        return "error/common";
+    }
+
     /*
-    @InitBinder // 이 컨트롤러 안에서만 사용할 수 있는 Validator이다.
+    @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.setValidator(joinValidator);
-    }
-     */
+    }*/
+
 }
