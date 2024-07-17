@@ -6,6 +6,7 @@ import org.choongang.member.controllers.RequestJoin;
 import org.choongang.member.entities.Member;
 import org.choongang.member.mappers.MemberMapper;
 import org.choongang.member.services.JoinService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,8 +52,13 @@ public class ApiMemberController {
                         .build())
                 .toList();
 
-        return ResponseEntity.status(HttpStatus.OK).body(members);
+        HttpHeaders headers = new HttpHeaders(); // 응답 헤더
+        headers.add("t1", "v1");
+        headers.add("t2", "v2");
+
+        //return ResponseEntity.status(HttpStatus.OK).body(members);
             // 응답을 상세하게 설정할 때 사용된다.
+        return new ResponseEntity<>(members, headers, HttpStatus.OK);
     }
 
     @GetMapping(path="/test", produces = "text/html;charset=UTF-8") // "text/html;charset=UTF-8", MediaType.APPLICATION_JSON_VALUE
