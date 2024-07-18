@@ -56,10 +56,10 @@ public class MvcConfig implements WebMvcConfigurer {
                 .setViewName("mypage/index");
     }
 
-    @Override
-    public void configureViewResolvers(ViewResolverRegistry registry) {
-        registry.jsp("/WEB-INF/templates/", ".jsp");
-    }
+//    @Override
+//    public void configureViewResolvers(ViewResolverRegistry registry) {
+//        registry.jsp("/WEB-INF/templates/", ".jsp");
+//    }
 
     @Bean // 얘가 뭐하는 애일까요?
     public static PropertySourcesPlaceholderConfigurer propertyConfigurer() {

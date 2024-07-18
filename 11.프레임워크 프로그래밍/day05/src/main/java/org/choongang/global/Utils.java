@@ -56,6 +56,9 @@ public class Utils {
                 .toList();
 
         ms.setUseCodeAsDefaultMessage(true);
+        // 다시 true로 돌려놓은 이유 11시 57분 수업내용 확인 - 싱글톤이기 때문에 하나의 객체만 공유한다.
         return messages;
     }
 }
+
+
