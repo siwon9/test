@@ -70,5 +70,7 @@ public class ApiMemberControllerTest {
         mockMvc.perform(get("/api/member/list"))
                 .andDo(print());
     }
+
+
 }
 
