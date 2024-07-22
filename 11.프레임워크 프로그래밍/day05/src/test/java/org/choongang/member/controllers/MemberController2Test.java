@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @ContextConfiguration(classes = MvcConfig.class)
 public class MemberController2Test {
 
-    @Autowired // 다형성 때문에 WebApplicationContext를 사용한다. 뭐가들어올지 모르기때문
+    @Autowired
     private WebApplicationContext ctx;
 
     private MockMvc mockMvc;
@@ -33,19 +33,21 @@ public class MemberController2Test {
     @Test
     void test1() throws Exception {
         mockMvc.perform(
-                post("/member/join")
-                        .header("appKey","1234") // 요청 헤더
-                        .contentType(MediaType.APPLICATION_JSON_VALUE) // 상수형태로 쓰는게 오타를 줄일 수 있어 좋음
+                    post("/member/join")
+                            .header("appKey", "1234") // 요청 헤더
+                            .contentType(MediaType.APPLICATION_JSON_VALUE)
                 )
                 .andDo(print());
     }
 
     @Test
-    void test2() throws Exception{
+    void test2() throws Exception {
         mockMvc.perform(
-                get("/member/join")
-                        .header("Accept-Language", Locale.KOREAN.getLanguage())
+                    get("/member/join")
+                            .header("Accept-Language", Locale.KOREAN.getLanguage())
+
                 )
                 .andDo(print());
     }
+
 }

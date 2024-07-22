@@ -14,17 +14,20 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringJUnitWebConfig
-@ContextConfiguration(classes = MvcConfig.class)
+@ContextConfiguration(classes= MvcConfig.class)
 public class ApiMemberControllerTest {
 
     private MockMvc mockMvc;
-//    @Autowired
-//    private ApiMemberController controller;
+
+    //@Autowired
+    //private ApiMemberController controller;
+
     @Autowired
     private WebApplicationContext ctx;
 
@@ -36,16 +39,16 @@ public class ApiMemberControllerTest {
 
     @Test
     void test1() throws Exception {
-        // Content-Type: application/x-www-form-urlencoded
+        // Content-Type: application/json
 
         ObjectMapper om = new ObjectMapper();
         om.registerModule(new JavaTimeModule());
 
         RequestJoin form = new RequestJoin();
         form.setEmail("user100@test.org");
-        form.setPassword("12341234");
-        form.setConfirmPassword("12341234");
-        form.setUserName("user100");
+        form.setPassword("12345678");
+       // form.setConfirmPassword("12345678");
+        //form.setUserName("사용자100");
         form.setAgree(true);
 
         String json = om.writeValueAsString(form);
@@ -56,13 +59,19 @@ public class ApiMemberControllerTest {
                 ).andDo(print())
                 .andExpect(status().isCreated());
 
-//        mockMvc.perform(
-//                post("/api/member")
-//                .param("email", "user99@test.org")
-//                .param("password", "12341234")
-//                .param("confirmPassword", "12341234")
-//                .param("userName", "user99"))
-//                .andDo(print());
+
+        // Content-Type: application/x-www-form-urlencoded
+        // 이름=값&이름=값...
+        /*
+        mockMvc.perform(
+                  post("/api/member")
+                .param("email", "user99@test.org")
+                .param("password", "12345678")
+                .param("confirmPassword", "12345678")
+                .param("userName", "사용자99"))
+                .andDo(print());
+
+         */
     }
 
     @Test
@@ -70,6 +79,4 @@ public class ApiMemberControllerTest {
         mockMvc.perform(get("/api/member/list"))
                 .andDo(print());
     }
-
-
 }

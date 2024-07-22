@@ -5,7 +5,6 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -21,9 +20,13 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 @ComponentScan("org.choongang")
-@Import({DBConfig.class, MessageConfig.class, InterceptorConfig.class, FileConfig.class})
-// 얘는 스캔범위가 이쪽이 아닐 때 만들어주면된다. 지금은 필요없다.
+/*
+@Import({DBConfig.class,
+        MessageConfig.class,
+        InterceptorConfig.class,
+        FileConfig.class})
 //@RequiredArgsConstructor
+ */
 public class MvcConfig implements WebMvcConfigurer {
 
     /*
@@ -55,20 +58,26 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addViewController("/mypage")
                 .setViewName("mypage/index");
     }
+    /*
+    @Override
+    public void configureViewResolvers(ViewResolverRegistry registry) {
+        registry.jsp("/WEB-INF/templates/", ".jsp");
+    }
+    */
 
-//    @Override
-//    public void configureViewResolvers(ViewResolverRegistry registry) {
-//        registry.jsp("/WEB-INF/templates/", ".jsp");
-//    }
-
-    @Bean // 얘가 뭐하는 애일까요?
+    @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfigurer() {
         String fileName = "application";
         String profile = System.getenv("spring.profiles.active");
         fileName += StringUtils.hasText(profile) ? "-" + profile:"";
 
-        // spring.profiles.active=dev --> application-dev
-        // spring.profiles.active=prod --> application-prod
+        /**
+         * spring.profiles.active=dev
+         * -> application-dev
+         *
+         * spring.profiles.active=prod
+         * -> application-prod
+         */
 
         PropertySourcesPlaceholderConfigurer conf = new PropertySourcesPlaceholderConfigurer();
         conf.setLocations(new ClassPathResource(fileName + ".properties"));
@@ -80,7 +89,7 @@ public class MvcConfig implements WebMvcConfigurer {
     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         ObjectMapper objectMapper = Jackson2ObjectMapperBuilder
-                .json() // xml로 바꾸면 바뀌지만 의존성을 한개 추가해야함
+                .json()
                 .serializerByType(LocalDateTime.class, new LocalDateTimeSerializer(formatter))
                 .build();
 

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 @Getter @Setter
-public class CommonException extends RuntimeException{
+public class CommonException extends RuntimeException {
 
     private HttpStatus status;
 
@@ -22,6 +22,4 @@ public class CommonException extends RuntimeException{
         super(message);
         this.status = status;
     }
-
-
 }

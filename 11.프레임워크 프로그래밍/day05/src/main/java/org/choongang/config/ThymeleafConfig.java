@@ -5,7 +5,6 @@ import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
@@ -15,16 +14,16 @@ import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 
 @Configuration
 @RequiredArgsConstructor
-@EnableWebMvc
 public class ThymeleafConfig implements WebMvcConfigurer {
     private final WebApplicationContext applicationContext;
+
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(applicationContext);
         templateResolver.setPrefix("/WEB-INF/templates2/");
         templateResolver.setSuffix(".html");
-        templateResolver.setCacheable(false);
+        templateResolver.setCacheable(false); // 캐시
         return templateResolver;
     }
 
@@ -51,5 +50,4 @@ public class ThymeleafConfig implements WebMvcConfigurer {
     public void configureViewResolvers(ViewResolverRegistry registry) {
         registry.viewResolver(thymeleafViewResolver());
     }
-
 }

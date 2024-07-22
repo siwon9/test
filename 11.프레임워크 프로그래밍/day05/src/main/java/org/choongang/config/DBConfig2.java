@@ -6,7 +6,6 @@ import org.apache.tomcat.jdbc.pool.DataSource;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.jdbc.repository.config.AbstractJdbcConfiguration;
 import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
@@ -18,11 +17,10 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Slf4j
-@Configuration
+//@Configuration
 public class DBConfig2 {
-    // 빈을 분리하기 위해서 두개로 정의함. 빈 설정클래스를 달리 분리한다.
-    @Profile("!prod") // 프로파일 설정이 prod파일이 아닐 때
-    @Configuration
+    @Profile("!prod") // prod 프로파일이 아닌 경우
+    //@Configuration
     @EnableTransactionManagement
     @MapperScan("org.choongang")
     @EnableJdbcRepositories("org.choongang")
@@ -30,13 +28,14 @@ public class DBConfig2 {
         @Bean(destroyMethod = "close")
         public DataSource dataSource() {
             log.info("dev 프로파일!");
+
             DataSource ds = new DataSource();
 
             /* 연결 설정 S */
             ds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
             ds.setUrl("jdbc:oracle:thin:@localhost:1521:EE");
-            ds.setUsername(System.getenv("db.username"));
-            ds.setPassword(System.getenv("db.password"));
+            ds.setUsername("SPRING");
+            ds.setPassword("oracle");
             /* 연결 설정 E */
 
             /* 커넥션 풀 설정 S */
@@ -73,8 +72,9 @@ public class DBConfig2 {
             return new NamedParameterJdbcTemplate(dataSource);
         }
     }
+
     @Profile("prod")
-    @Configuration
+    //@Configuration
     @EnableTransactionManagement
     @MapperScan("org.choongang")
     @EnableJdbcRepositories("org.choongang")
@@ -88,9 +88,9 @@ public class DBConfig2 {
 
             /* 연결 설정 S */
             ds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
-            ds.setUrl("jdbc:oracle:thin:@localhost:1521:EE");
-            ds.setUsername(System.getenv("db.username"));
-            ds.setPassword(System.getenv("db.password"));
+            ds.setUrl("jdbc:oracle:thin:@localhost:1521:XE");
+            ds.setUsername("SPRING");
+            ds.setPassword("oracle");
             /* 연결 설정 E */
 
             /* 커넥션 풀 설정 S */

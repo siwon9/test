@@ -4,11 +4,11 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class RequestLogin { // 커멘드 객체
+public class RequestLogin {
     @NotBlank
     private String email;
+
     @NotBlank
     private String password;
-
     private boolean saveEmail;
 }

@@ -35,6 +35,3 @@ public class RestCommonControllerAdvice {
         return ResponseEntity.status(status).body(data);
     }
 }
-
-
-

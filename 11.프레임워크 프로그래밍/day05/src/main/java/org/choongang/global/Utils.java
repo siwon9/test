@@ -15,10 +15,14 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class Utils {
+public class Utils { // 빈이름 utils
 
     private final MessageSource messageSource;
     private final HttpServletRequest request;
+
+    public String toUpper(String str) { // 이런거는 Strings에 있는 기능이기 때문에 만들 필요는 없다.
+        return str.toUpperCase();
+    }
 
     public Map<String, List<String>> getErrorMessages(Errors errors) {
         // FieldErrors
@@ -30,7 +34,7 @@ public class Utils {
 
         // GlobalErrors
         List<String> gMessages = errors.getGlobalErrors()
-                .stream()
+                                    .stream()
                 .flatMap(e -> getCodeMessages(e.getCodes()).stream()).toList();
 
         if (!gMessages.isEmpty()) {
@@ -52,13 +56,10 @@ public class Utils {
                         return "";
                     }
                 })
-                .filter(s -> s != null && !s.isBlank())
+                .filter(s -> !s.isBlank())
                 .toList();
 
         ms.setUseCodeAsDefaultMessage(true);
-        // 다시 true로 돌려놓은 이유 11시 57분 수업내용 확인 - 싱글톤이기 때문에 하나의 객체만 공유한다.
         return messages;
     }
 }
-
-

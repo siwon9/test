@@ -4,8 +4,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <c:url var="actionUrl" value="/member/join" />
+
 <%--
-<spring:message code="LOGIN_MSG" arguments="사용자01, user01" />
+<spring:message code="LOGIN_MSG" arguments="사용자01,USER01"/>
 --%>
 <spring:message code="LOGIN_MSG">
     <spring:argument value="사용자01" />
@@ -53,7 +54,7 @@
         <dt>취미</dt>
         <dd>
             <form:radiobuttons path="hobby" items="${hobbies2}" itemLabel="code" itemValue="value" />
-             <%--
+
             <form:select path="hobby">
                 <option value=''>- 선택하세요 -</option>
                 <form:option value="hobby0" label="취미0" />
@@ -68,7 +69,7 @@
 
             <form:select path="hobby" items="${hobbies}" />
             <form:checkboxes path="hobby" items="${hobbies}" />
-            --%>
+
         </dd>
     </dl>
     <dl>
@@ -79,7 +80,7 @@
             <form:input path="addr.addressSub" placeholder="나머지 주소" />
         </dd>
     </dl>
-
+    --%>
     <dl>
         <dt>
             <spring:message code="약관동의" />

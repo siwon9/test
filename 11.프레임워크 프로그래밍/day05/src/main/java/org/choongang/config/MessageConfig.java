@@ -11,10 +11,9 @@ public class MessageConfig {
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource ms = new ResourceBundleMessageSource();
-        ms.addBasenames("messages.commons", "messages.validations", "messages.errors");
+        ms.setBasenames("messages.commons", "messages.validations", "messages.errors");
         ms.setDefaultEncoding("UTF-8");
-        ms.setUseCodeAsDefaultMessage(true); // 메세지 코드가 없을 때 코드로 메세지 대체
+        ms.setUseCodeAsDefaultMessage(true); // 메세지 코드가 없는 경우 코드로 메세지 대체
         return ms;
     }
-
 }

@@ -13,11 +13,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class JoinService {
 
+
     private final MemberMapper mapper;
 
     public void process(RequestJoin form) {
 
-        //비밀번호 해시화
+        // 비밀번호 해시화
         String hash = BCrypt.hashpw(form.getPassword(), BCrypt.gensalt(12));
 
         // DB 저장

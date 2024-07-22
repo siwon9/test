@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class JSONData { // 통일성을 위해 정의한 클래스
+public class JSONData {
     private HttpStatus status = HttpStatus.OK;
     private boolean success = true;
     private Object message;

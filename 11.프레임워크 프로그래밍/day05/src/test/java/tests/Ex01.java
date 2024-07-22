@@ -40,9 +40,9 @@ public class Ex01 {
                 //.queryParam("t4", "aa{1}")
                 .fragment("hash")
                 //.encode()
-                .build(false);
-        //.encode()
-        //.build("AAAA", "BBBB");
+                        .build(false);
+                //.encode()
+                //.build("AAAA", "BBBB");
         System.out.println(url.getQuery());
         System.out.println(url);
 
@@ -75,6 +75,7 @@ public class Ex01 {
     }
 
     @Test
+    @DisplayName("JSON 형식으로 POST 처리 예시")
     void test4() throws Exception {
         RestTemplate restTemplate = new RestTemplate();
 
@@ -99,15 +100,15 @@ public class Ex01 {
     }
 
     @Test
-    @DisplayName("일반 양식 형식으로 전송 - Content-Type: capplication/x-www/form-urlencoded")
+    @DisplayName("일반 양식 형식으로 전송 - Content-Type: application/x-www-form-urlencoded")
     void test5() {
         RestTemplate restTemplate = new RestTemplate();
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("email", "user998@test.org");
-        params.add("password", "12341234");
-        params.add("confirmPassword", "12341234");
-        params.add("userName", "user998");
+        params.add("password", "12345678");
+        params.add("confirmPassword", "12345678");
+        params.add("userName", "사용자998");
         params.add("agree", "true");
 
         HttpHeaders headers = new HttpHeaders();

@@ -1,16 +1,19 @@
 package org.choongang.member.controllers;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
 public class RequestJoin {
-    @NotBlank// 에노테이션 이름이 에러코드가 된다.
+    @NotBlank
     @Email
     private String email;
 
-    @Size(min=8)
     @NotBlank
+    @Size(min=8)
     private String password;
 
     @NotBlank
@@ -29,13 +32,11 @@ public class RequestJoin {
     private String password;
     private String confirmPassword;
     private String userName;
-    // private String[] hobby;
-    // private Set<String> hobby;
-    // private List<String> hobby;   //이거는 리스트라 mutiple형태로 나오고
-    private String hobby; // 이거는 한개씩 선택할 수 있게 나온다.
-
+    //private String[] hobby;
+    //private Set<String> hobby;
+    //private List<String> hobby;
+    private String hobby;
     private boolean agree;
 
     private Address addr;
-}
- */
+} */

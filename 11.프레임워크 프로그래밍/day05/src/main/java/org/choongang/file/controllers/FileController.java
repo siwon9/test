@@ -25,7 +25,7 @@ public class FileController {
 
     @ResponseBody
     @PostMapping("/upload")
-    public void uploadPs(@RequestPart("file") MultipartFile file) { // 여러개 일때는 배열형태로 이쪽 잘 모름
+    public void uploadPs(@RequestPart("file") MultipartFile file) {
         String name = file.getOriginalFilename();
         log.info("파일명: {}", name);
 
@@ -33,11 +33,6 @@ public class FileController {
 
         try {
             file.transferTo(uploadPath);
-        } catch (IOException e) {
-
-        }
+        } catch (IOException e) {}
     }
 }
-
-
-

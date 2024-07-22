@@ -7,5 +7,4 @@ public class Address {
     private String zipCode;
     private String address;
     private String addressSub;
-
 }

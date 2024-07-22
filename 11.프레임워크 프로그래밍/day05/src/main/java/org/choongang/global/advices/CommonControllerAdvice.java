@@ -13,20 +13,20 @@ import org.springframework.web.servlet.ModelAndView;
 //@ControllerAdvice("org.choongang")
 public class CommonControllerAdvice {
 
-    @ExceptionHandler(Exception.class) // 에러페이지를 정의하려고 쓴다.
+    @ExceptionHandler(Exception.class)
     public ModelAndView errorHandler(Exception e, HttpServletRequest request, HttpServletResponse response, Model model) {
         e.printStackTrace();
         log.info("advice 유입");
 
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR; // 500
-        if(e instanceof CommonException commonException) {
-            //CommonException commonException = (CommonException) e;
+        if (e instanceof CommonException commonException) {
+           // CommonException commonException = (CommonException) e;
             status = commonException.getStatus();
         }
 
         ModelAndView mv = new ModelAndView();
-        mv.setStatus(status);
         mv.setViewName("error/common");
+        mv.setStatus(status);
 
         return mv;
     }

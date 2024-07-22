@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class LoginService {
 
     private final MemberMapper mapper;
-    private final HttpSession session; // 웹기초 세션 강의 듣기
+    private final HttpSession session;
     private final HttpServletResponse response;
 
     public void process(String email) {
@@ -24,7 +24,7 @@ public class LoginService {
          */
 
         Member member = mapper.get(email);
-        if(email == null) {
+        if (email == null) {
             return;
         }
 
@@ -33,12 +33,14 @@ public class LoginService {
 
     public void process(RequestLogin form) {
         process(form.getEmail());
-        // 이메일 기억하기 처리
+
+        /* 이메일 기억하기 처리 */
         Cookie cookie = new Cookie("savedEmail", form.getEmail());
-        if(form.isSaveEmail()) { // 쿠키 등록
+        if (form.isSaveEmail()) { // 쿠키 등록
             cookie.setMaxAge(60 * 60 * 24 * 7); // 7일간 쿠키 유지
-        } else{ // 쿠키 제거
-            cookie.setMaxAge(0); // 1970년도로 돌아가기때문에 쿠키 제거됨
+
+        } else { // 쿠키 제거
+            cookie.setMaxAge(0);
         }
 
         response.addCookie(cookie);
