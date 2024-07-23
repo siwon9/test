@@ -1,7 +1,6 @@
 package org.choongang.jpa_study;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.PersistenceContext;
 import org.choongang.member.entities.Member;
 import org.junit.jupiter.api.Test;
@@ -27,10 +26,6 @@ public class Ex01 {
     void test1() {
         //EntityManager em = emf.createEntityManager();// 상태변화에 따라서 쿼리가 자동실행되게 만든다.
 
-        EntityTransaction tx = em.getTransaction();
-        // transaction안에서 작업을 해줘야 작동이된다.
-
-        tx.begin(); // Transaction 시작
         Member member = new Member();
         member.setSeq(1L);
         member.setEmail("user01@test.org");

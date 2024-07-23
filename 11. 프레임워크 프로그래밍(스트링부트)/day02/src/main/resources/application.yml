@@ -6,9 +6,10 @@ spring:
   # 데이터베이스 설정
   datasource:
     driverClassName: oracle.jdbc.driver.OracleDriver
-    url: jdbc:oracle:thin:@localhost:1521:EE # 환경변수로 할 수 있음 , 베포할 땐 환경변수로 해야됨
+    url: jdbc:oracle:thin:@localhost:1521:XE
     username: ${db.username}
     password: ${db.password}
+
   # JPA 설정
   jpa:
     properties:
@@ -16,26 +17,13 @@ spring:
         show_sql: true # 실행하는 SQL을 콘솔에 출력
         format_sql: true # 실행되는 SQL의 들여쓰기 및 줄 개행
         use_sql_comments: true
-      #dialect: org.hibernate.dialect.OracleDialect
+        #dialect: org.hibernate.dialect.OracleDialect
     hibernate:
-      ddlAuto: create
+      ddlAuto: update
 
 
 # 로거 설정
 logging:
   level:
-    org:
-      hibernate:
-        type:
-          descriptor:
-            sql: trace
-
-
-
-
-
-
-
-
-
-
+    org.hibernate.type: trace
+    org.hibernate.orm.jdbc.bind: trace
