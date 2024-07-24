@@ -7,6 +7,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.TestPropertySource;
 
 import java.util.List;
@@ -14,7 +17,7 @@ import java.util.stream.IntStream;
 
 @SpringBootTest
 @TestPropertySource(properties = "spring.profiles.active=test")
-public class Ex05 {
+public class Ex06 {
 
     @Autowired
     private MemberRepository memberRepository;
@@ -29,41 +32,40 @@ public class Ex05 {
                         .userName("user" + i)
                         .authority(Authority.USER)
                         .build()).toList();
+
         memberRepository.saveAllAndFlush(members);
-        /*
-        for (int i = 1; i <= 10; i++) {
-            Member member = Member.builder()
-                    .email("user" + i + "@test.org")
-                    .password("12341234")
-                    .userName("user" + i)
-                    .authority(Authority.USER)
-                    .build();
-
-            memberRepository.saveAndFlush(member);
-        }
-         */
     }
 
     @Test
-    void test1() {
-        Member member = memberRepository.findById(1L).orElse(null);
+    void test1(){
+        Member member = memberRepository.findByEmail("user02@test.org");
         System.out.println(member);
-
-        member.setUserName("(수정)사용자01");
-        memberRepository.save(member);
-
-        //memberRepository.flush();
-
-        Member member2 = memberRepository.findById(1L).orElse(null);
-        System.out.println(member2);
-
-        memberRepository.delete(member2);
-        memberRepository.flush();
     }
 
     @Test
-    void test2() {
-        List<Member> members = memberRepository.findAll();
+    void test2(){
+        List<Member> members = memberRepository.findByEmailContainingAndUserNameContainingOrderByCreatedAtDesc("ser","won");
+
         members.forEach(System.out::println);
+
+    }
+
+    @Test
+    void test3(){
+        Pageable pageable = PageRequest.of(0, 3);
+        Page<Member> data = memberRepository.findByEmailContaining("ser", pageable);
+
+        List<Member> items = data.getContent(); // 조회된 데이터
+        long total = data.getTotalElements();
+        System.out.printf("총 갯수 : %d%n", total);
+        items.forEach(System.out::println);
+
+    }
+
+    @Test
+    void test4() {
+        List<Member> members = memberRepository.getMembers("%ser%", "%on%");
+        members.forEach(System.out::println);
+
     }
 }
