@@ -1,8 +1,13 @@
 package org.choongang.jpa_study;
 
+
+import com.querydsl.core.Tuple;
+import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.choongang.global.board.entities.BoardData;
+import org.choongang.global.board.entities.QBoardData;
 import org.choongang.member.constants.Authority;
 import org.choongang.member.entities.Member;
 import org.choongang.member.repositories.MemberRepository;
@@ -19,13 +24,15 @@ import java.util.stream.IntStream;
 @SpringBootTest
 @ActiveProfiles("test")
 @Transactional
-public class Ex09 {
-
+public class Ex12 {
     @Autowired
     private MemberRepository memberRepository;
 
     @Autowired
     private org.choongang.board.repositories.BoardDataRepository boardDataRepository;
+
+    @Autowired
+    private JPAQueryFactory queryFactory;
 
     @PersistenceContext
     private EntityManager em;
@@ -41,35 +48,59 @@ public class Ex09 {
 
         memberRepository.saveAndFlush(member);
 
-        List<BoardData> items = IntStream.rangeClosed(1,10)
-                .mapToObj(i -> BoardData.builder().subject("제목" + i)
+
+        List<BoardData> items = IntStream.rangeClosed(1, 10)
+                .mapToObj(i -> BoardData.builder()
+                        .subject("제목" + i)
                         .content("내용" + i)
                         .member(member)
                         .build()).toList();
 
         boardDataRepository.saveAllAndFlush(items);
-        em.clear(); // 실제 작업할때는 캐시를 이용해야한다.
-
+        em.clear();
     }
 
     @Test
     void test1() {
-        BoardData item = boardDataRepository.findById(1L).orElse(null);
+        List<BoardData> items = boardDataRepository.findAll();
 
-        Member member = item.getMember(); // 게시글을 작성한 회원
-        System.out.println(member);
-
+        for (BoardData item : items) {
+            Member member = item.getMember();
+            String email = member.getEmail();
+            String userName = member.getUserName();
+            System.out.printf("email=%s, userName=%s%n", email, userName);
+        }
     }
 
     @Test
     void test2() {
-        Member member = memberRepository.findById(1L).orElse(null);
-        List<BoardData> items = member.getItems();
+        List<BoardData> items = boardDataRepository.getAllList();
+    }
+
+    @Test
+    void test3() {
+        List<BoardData> items = boardDataRepository.findBySubjectContaining("제목");
+    }
+
+    @Test
+    void test4() {
+        QBoardData boardData = QBoardData.boardData;
+
+        JPAQueryFactory factory = new JPAQueryFactory(em);
+        JPAQuery<BoardData> query = queryFactory
+                .selectFrom(boardData)
+                .leftJoin(boardData.member)
+                .fetchJoin(); // 중요한 메서드라고 함
+
+        List<BoardData> items = query.fetch();
         //items.forEach(System.out::println);
     }
 
-
+    @Test
+    void test5() {
+        QBoardData boardData = QBoardData.boardData;
+        JPAQuery<Tuple> query = queryFactory.select(boardData.subject,boardData.content);
+        List<Tuple> items = query.fetch();
+    }
 }
-
-
 

@@ -1,10 +1,10 @@
 package org.choongang.jpa_study;
 
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.choongang.global.board.entities.BoardData;
 import org.choongang.global.board.entities.HashTag;
-import org.choongang.global.board.repositories.BoardDataRepository;
 import org.choongang.global.board.repositories.HashTagRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ import java.util.stream.IntStream;
 public class Ex11 {
 
     @Autowired
-    private BoardDataRepository boardDataRepository;
+    private org.choongang.board.repositories.BoardDataRepository boardDataRepository;
 
     @Autowired
     private HashTagRepository hashTagRepository;
