@@ -57,6 +57,15 @@ public class Ex09 {
     void test1() {
         BoardData item = boardDataRepository.findById(1L).orElse(null);
 
-        System.out.println(item);
+        Member member = item.getMember(); // 게시글을 작성한 회원
+        System.out.println(member);
+
+    }
+
+    @Test
+    void test2() {
+        Member member = memberRepository.findById(1L).orElse(null);
+        List<BoardData> items = member.getItems();
+        items.forEach(System.out::println);
     }
 }

@@ -1,12 +1,12 @@
 package org.choongang.member.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.choongang.global.board.entities.BoardData;
 import org.choongang.global.entities.BaseEntity;
 import org.choongang.member.constants.Authority;
+
+import java.util.List;
 
 @Builder
 @Data
@@ -40,4 +40,11 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
+    @OneToOne
+    @JoinColumn(name="profile_seq")
+    private MemberProfile profile;
+
+    @ToString.Exclude // ToString 추가 배제 , 상관관계를 이해하고 어디에 추가로 배제해야 하는지 생각해보자
+    @OneToMany(mappedBy = "member") // 이거 넣어야하는 이유가 뭔데?
+    private List<BoardData> items;
 }
