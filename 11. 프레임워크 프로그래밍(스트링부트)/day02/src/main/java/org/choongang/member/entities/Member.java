@@ -5,6 +5,7 @@ import lombok.*;
 import org.choongang.global.board.entities.BoardData;
 import org.choongang.global.entities.BaseEntity;
 import org.choongang.member.constants.Authority;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.List;
 
@@ -44,7 +45,8 @@ public class Member extends BaseEntity {
     @JoinColumn(name="profile_seq")
     private MemberProfile profile;
 
+    @BatchSize(size=3)
     @ToString.Exclude // ToString 추가 배제 , 상관관계를 이해하고 어디에 추가로 배제해야 하는지 생각해보자
-    @OneToMany(mappedBy = "member") // 이거 넣어야하는 이유가 뭔데?
+    @OneToMany(mappedBy = "member", cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, orphanRemoval = true) // 이거 넣어야하는 이유가 뭔데?// 제약조건 CASCADE ON DELETE는 아니다.
     private List<BoardData> items;
 }

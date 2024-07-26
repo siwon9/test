@@ -3,6 +3,9 @@ package org.choongang.jpa_study;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.Tuple;
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
@@ -128,21 +131,31 @@ public class Ex12 {
         andBuilder.and(boardData.subject.contains("제목"))
                 .and(boardData.member.email.eq("user01@test.org"));
 
-        BooleanBuilder orBuilder = new BooleanBuilder();
-        orBuilder.or(boardData.seq.eq(2L))
-                .or(boardData.seq.eq(3L))
-                .or(boardData.seq.eq(4L));
+//        BooleanBuilder orBuilder = new BooleanBuilder();
+//        orBuilder.or(boardData.seq.eq(2L))
+//                .or(boardData.seq.eq(3L))
+//                .or(boardData.seq.eq(4L));
+//
+//        andBuilder.and(orBuilder);
 
-        andBuilder.and(orBuilder);
+        PathBuilder<BoardData> pathBuilder = new PathBuilder<>(BoardData.class, "boardData");
 
         JPAQuery<BoardData> query = queryFactory.selectFrom(boardData)
         // 전체조회할 땐 변화감지가 되는 엔티티형태로 가져온다. 단일조회는 X
                 .leftJoin(boardData.member)
                 .fetchJoin()
-                .where(boardData.seq.in(2L,3L,4L)); // BooleanExpression - Predicate
+                .where(andBuilder) // BooleanExpression - Predicate
+                .offset(3) // 조회 시작 레코드 위치
+                .limit (3) // 3개 레코드로 한정 - 개수 제한
+                .orderBy(
+                        new OrderSpecifier(Order.DESC, pathBuilder.get("createdAt")),
+                        new OrderSpecifier(Order.ASC, pathBuilder.get("subject"))
+                );
+        // .where(boardData.seq.in(2L, 3L, 4L)); // BooleanExpression - Predicate
 
         List<BoardData> items = query.fetch();
         items.forEach(System.out::println);
 
     }
 }
+
