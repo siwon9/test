@@ -8,7 +8,7 @@ import org.choongang.member.entities.Member;
 import java.util.List;
 
 @Data
-@Entity
+@Entity // 테이블에 대응하는 클래스
 @Builder
 @AllArgsConstructor @NoArgsConstructor
 public class BoardData extends BaseEntity {

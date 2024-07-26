@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Lazy;
 @RequiredArgsConstructor
 public class DBConfig {
 
-    @PersistenceContext
+    @PersistenceContext// JPA의 EntityManager를 주입받기 위해 사용
     private EntityManager em;
 
     @Lazy
