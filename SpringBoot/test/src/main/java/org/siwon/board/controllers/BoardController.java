@@ -54,7 +54,4 @@ public class BoardController {
 
         return "front/board/list";
     }
-
-
-
 }
